@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #003d82;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #002952;
+        }
+        .result {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+        }
+        .success {
+            color: #388e3c;
+            background: #e8f5e9;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Test Paneli</h1>
+
+    <div class="test-section">
+        <h2>1. Tüm Haberleri Getir (GET)</h2>
+        <button onclick="testGetAllNews()">Haberleri Getir</button>
+        <div id="get-all-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. Haber Ekle (POST)</h2>
+        <input type="text" id="title" placeholder="Başlık" value="Test Haberi">
+        <input type="text" id="summary" placeholder="Özet" value="Bu bir test haberidir">
+        <input type="text" id="content" placeholder="İçerik" value="Test içeriği">
+        <input type="text" id="category" placeholder="Kategori" value="Test">
+        <input type="text" id="image" placeholder="Resim URL" value="https://via.placeholder.com/400x300">
+        <button onclick="testAddNews()">Haber Ekle</button>
+        <div id="post-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. API Durumu</h2>
+        <button onclick="testAPIStatus()">API Kontrol Et</button>
+        <div id="status-result" class="result"></div>
+    </div>
+
+    <script>
+        async function testGetAllNews() {
+            const resultDiv = document.getElementById('get-all-result');
+            try {
+                resultDiv.textContent = 'Yükleniyor...';
+                const response = await fetch('./api.php');
+                const data = await response.json();
+                resultDiv.classList.remove('error');
+                resultDiv.classList.add('success');
+                resultDiv.textContent = `✓ Başarılı!\n\nHaber Sayısı: ${data.length}\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                resultDiv.classList.remove('success');
+                resultDiv.classList.add('error');
+                resultDiv.textContent = `✗ Hata: ${error.message}`;
+            }
+        }
+
+        async function testAddNews() {
+            const resultDiv = document.getElementById('post-result');
+            try {
+                resultDiv.textContent = 'Yükleniyor...';
+                const newsData = {
+                    title: document.getElementById('title').value,
+                    summary: document.getElementById('summary').value,
+                    content: document.getElementById('content').value,
+                    category: document.getElementById('category').value,
+                    image: document.getElementById('image').value,
+                    author: 'Test User',
+                    date: new Date().toISOString().split('T')[0]
+                };
+
+                const response = await fetch('./api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newsData)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.classList.remove('error');
+                    resultDiv.classList.add('success');
+                    resultDiv.textContent = `✓ Haber başarıyla eklendi!\n\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    resultDiv.classList.remove('success');
+                    resultDiv.classList.add('error');
+                    resultDiv.textContent = `✗ Hata: ${data.error || 'Bilinmeyen hata'}`;
+                }
+            } catch (error) {
+                resultDiv.classList.remove('success');
+                resultDiv.classList.add('error');
+                resultDiv.textContent = `✗ Hata: ${error.message}`;
+            }
+        }
+
+        async function testAPIStatus() {
+            const resultDiv = document.getElementById('status-result');
+            try {
+                resultDiv.textContent = 'Kontrol ediliyor...';
+                const response = await fetch('./api.php');
+                const statusText = response.ok ? 'Çalışıyor ✓' : `Hata (HTTP ${response.status})`;
+                
+                resultDiv.classList.remove('error');
+                resultDiv.classList.add('success');
+                resultDiv.textContent = `API Durumu: ${statusText}\n\nHTTP Status: ${response.status}\n\nContentType: ${response.headers.get('content-type')}`;
+            } catch (error) {
+                resultDiv.classList.remove('success');
+                resultDiv.classList.add('error');
+                resultDiv.textContent = `✗ API Erişilemez: ${error.message}\n\nSebep:\n- PHP sunucusu çalışmıyor olabilir\n- api.php dosyası yanlış konumda olabilir\n- İzinler eksik olabilir`;
+            }
+        }
+
+        // Sayfa yüklenince test et
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Test sayfası yüklendi');
+        });
+    </script>
+</body>
+</html>

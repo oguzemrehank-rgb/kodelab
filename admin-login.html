@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Giriş - KODE Kodlama Eğitimi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER / NAVIGASYON -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">KODE Kodlama Eğitimi</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK -->
+  <main class="main-content">
+    <div class="login-container">
+      <h1 class="login-title">🔐 Admin Paneli</h1>
+      
+      <!-- UYARI MESAJLARI -->
+      <div id="alert-container"></div>
+
+      <!-- GİRİŞ FORMU -->
+      <form id="login-form">
+        <div class="form-group">
+          <label for="password">Şifre:</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Admin şifresini giriniz"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          Giriş Yap
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2024 KODE Kodlama Eğitimi. Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <!-- ÇEREZ UYARISI -->
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-container">
+      <div class="cookie-text">
+        <h3>🍪 Çerez Politikası</h3>
+        <p>
+          Bu sitede kullanılan kodlar ve içerikler telif hakları ile korunmaktadır.
+          <span class="cookie-warning">⚠️ Bu kodları hak ihlali yaparak kopyalamak veya kullanmak hakkında işlem başlatılacağını belirtir.</span>
+          Siteyi kullanarak çerez ve gizlilik politikasını kabul etmiş sayılırsınız.
+        </p>
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-accept" id="cookie-accept">✅ Kabul Ediyorum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUsdH7QQl5RTQybvUuSFRPWiRdKsri7_c",
+      authDomain: "kode-7ee97.firebaseapp.com",
+      projectId: "kode-7ee97",
+      storageBucket: "kode-7ee97.firebasestorage.app",
+      messagingSenderId: "1083556420876",
+      appId: "1:1083556420876:web:afa0725dce6c8583877d29",
+      measurementId: "G-7ZCEFYQVXN"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    window.db = firebase.firestore();
+    window.firebaseModules = firebase.firestore;
+  </script>
+  <script src="storage.js"></script>
+  <script src="admin.js"></script>
+  <script src="cookie-policy.js"></script>
+</body>
+</html>

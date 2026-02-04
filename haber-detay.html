@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haber Detay - KODE Kodlama Eğitimi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER / NAVIGASYON -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="logo">KODE Kodlama Eğitimi</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="admin-login.html" class="admin-link">📋 Admin Panel</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK -->
+  <main class="main-content">
+    <div class="container">
+      <!-- HABER BAŞLIĞI SEKSİYONU -->
+      <div id="article-header" class="article-header">
+        <a href="index.html" class="back-link">Ana Sayfa</a>
+        <h1 id="article-title" class="article-title">Haber Başlığı</h1>
+        <div id="article-meta" class="article-meta">
+          <span id="article-date">Tarih</span>
+          <span id="article-category" class="news-category">Kategori</span>
+          <span id="article-author">Yazar</span>
+        </div>
+      </div>
+
+      <!-- HABER İÇERİĞİ -->
+      <article>
+        <img id="article-image" src="" alt="Haber Görseli" class="article-image">
+        
+        <div id="article-content" class="article-content">
+          <!-- İçerik buraya yüklenir -->
+        </div>
+
+        <!-- HABER BULUNAMADI -->
+        <div id="not-found" class="empty-state hidden">
+          <div class="empty-state-icon">❌</div>
+          <h2 class="empty-state-title">Haber Bulunamadı</h2>
+          <p>Aradığınız haber sistemde bulunmuyor. <a href="index.html" class="back-link" style="color: var(--secondary-color);">Ana sayfaya dönün</a></p>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2024 KODE Kodlama Eğitimi. Tüm Hakları Saklıdır.</p>
+  </footer>
+
+  <!-- ÇEREZ UYARISI -->
+  <div id="cookie-banner" class="cookie-banner">
+    <div class="cookie-container">
+      <div class="cookie-text">
+        <h3>🍪 Çerez Politikası</h3>
+        <p>
+          Bu sitede kullanılan kodlar ve içerikler telif hakları ile korunmaktadır.
+          <span class="cookie-warning">⚠️ Bu kodları hak ihlali yaparak kopyalamak veya kullanmak hakkında işlem başlatılacağını belirtir.</span>
+          Siteyi kullanarak çerez ve gizlilik politikasını kabul etmiş sayılırsınız.
+        </p>
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-accept" id="cookie-accept">✅ Kabul Ediyorum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDUsdH7QQl5RTQybvUuSFRPWiRdKsri7_c",
+      authDomain: "kode-7ee97.firebaseapp.com",
+      projectId: "kode-7ee97",
+      storageBucket: "kode-7ee97.firebasestorage.app",
+      messagingSenderId: "1083556420876",
+      appId: "1:1083556420876:web:afa0725dce6c8583877d29",
+      measurementId: "G-7ZCEFYQVXN"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    window.db = firebase.firestore();
+    window.firebaseModules = firebase.firestore;
+  </script>
+  <script src="storage.js"></script>
+  <script src="app.js"></script>
+  <script src="cookie-policy.js"></script>
+</body>
+</html>
